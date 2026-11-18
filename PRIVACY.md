@@ -1,0 +1,2 @@
+# Privacy Policy - Sprint Risk Copilot
+This Forge app processes Jira project and issue data in real time within Atlassian's infrastructure. No personal user data or Jira issue data is stored externally.

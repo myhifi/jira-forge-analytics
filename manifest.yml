@@ -1,0 +1,43 @@
+modules:
+  jira:projectPage:
+    - key: jira-forge-analytics-hello-world-project-page
+      resource: main
+      resolver:
+        function: resolver
+      render: native
+      title: jira-forge-analytics
+  rovo:agent:
+    - key: sprint-risk-copilot
+      name: Sprint Risk Copilot
+      description: Analyzes current Jira issues to predict sprint risks and suggest mitigations.
+      prompt: >
+        You are an expert Agile Coach. Your goal is to help Scrum Masters identify risks in their sprint.
+        Use the getSprintRisks action to fetch the current risks. 
+        If there are High or Critical risks, provide a brief, actionable recovery plan.
+      actions:
+        - getSprintRisks
+  action:
+    - key: getSprintRisks
+      name: Get Sprint Risks
+      function: getSprintRisksFunction
+      actionVerb: GET
+      description: Fetches the calculated risk levels for all issues in the KAN project.
+      inputs: {}
+  function:
+    - key: resolver
+      handler: index.handler
+    - key: getSprintRisksFunction
+      handler: index.getSprintRisksHandler
+resources:
+  - key: main
+    path: src/frontend/index.jsx
+app:
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/8ffc62c0-e33d-457e-8515-934c673740d5
+permissions:
+  scopes:
+    - 'read:jira-work'
+    - 'read:graph:issue:jira'
